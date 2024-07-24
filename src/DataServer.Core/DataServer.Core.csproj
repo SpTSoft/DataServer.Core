@@ -25,6 +25,7 @@
     <Folder Include="Net\" />
     <Folder Include="MEF\" />
     <Folder Include="Modeling\" />
+    <Folder Include="IO\" />
   </ItemGroup>
 
   <ItemGroup>
