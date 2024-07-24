@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Access\" />
     <Folder Include="Net\" />
     <Folder Include="MEF\" />
     <Folder Include="Modeling\" />
