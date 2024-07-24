@@ -4,6 +4,20 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>$(AssemblyName)</Title>
+    <Version>0.0.1</Version>
+    <Company>SpTSoftware</Company>
+    <Copyright>@ SpTSoftware</Copyright>
+    <PackageProjectUrl>https://github.com/SpTSoft/DataServer.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SpTSoft/DataServer.Core</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
