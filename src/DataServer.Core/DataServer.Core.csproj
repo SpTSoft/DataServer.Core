@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -22,12 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Net\" />
-    <Folder Include="MEF\" />
-    <Folder Include="Modeling\" />
-    <Folder Include="IO\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
 
 </Project>
