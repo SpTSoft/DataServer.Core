@@ -20,9 +20,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Net\" />
-    <Folder Include="Database\" />
-  </ItemGroup>
-
 </Project>
