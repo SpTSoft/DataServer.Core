@@ -23,7 +23,7 @@ namespace DataServer.Core.MEF
 
         public Observer(IFileObserver fileObserver)
         {
-            this._FileObserver=fileObserver;
+            this._FileObserver = fileObserver;
         }
     }
 }
