@@ -13,17 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Notifications;
-
 namespace DataServer.Core.Lockering
 {
-    public class LockerService : ILockerService
+    public interface ILockerServer
     {
-        private readonly INotificationsService _NotificationsService;
-
-        public LockerService(INotificationsService notificationsService) 
-        {
-            this._NotificationsService = notificationsService;
-        }
     }
 }
