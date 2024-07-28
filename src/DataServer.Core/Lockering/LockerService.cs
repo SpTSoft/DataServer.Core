@@ -15,7 +15,7 @@
 
 namespace DataServer.Core.Lockering
 {
-    public class LockerServer : ILockerServer
+    public class LockerService : ILockerService
     {
     }
 }

@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Lockering;
+
 namespace DataServer.Core.Access
 {
     public class AccessGate : IAccessGate
     {
+        private readonly ILockerService _LockerService;
     }
 }
