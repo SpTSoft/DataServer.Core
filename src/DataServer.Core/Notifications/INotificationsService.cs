@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net;
+
 namespace DataServer.Core.Notifications
 {
-    public class NotificationsCore : INotificationsCore
+    public interface INotificationsService
     {
+        public IReadOnlyNetGate NetGate { get; }
     }
 }
