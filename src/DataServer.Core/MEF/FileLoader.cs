@@ -13,17 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.IO;
-
 namespace DataServer.Core.MEF
 {
-    public class Observer : IObserver
+    public class FileLoader : IFileLoader
     {
-        private readonly IFileObserver _FileObserver;
-
-        public Observer(IFileObserver fileObserver) 
-        {
-            this._FileObserver = fileObserver;
-        }
     }
 }

@@ -15,7 +15,7 @@
 
 namespace DataServer.Core.MEF
 {
-    public interface IObserver
+    public interface IFileLoader
     {
     }
 }
