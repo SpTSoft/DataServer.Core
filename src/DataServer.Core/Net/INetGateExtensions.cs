@@ -15,11 +15,11 @@
 
 namespace DataServer.Core.Net
 {
-    public class NetGate : INetGate
+    public static class INetGateExtensions
     {
-        public IReadOnlyNetGate ConvertToReadOnly() 
+        public static IReadOnlyNetGate Convert(this INetGate netGate) 
         {
-            throw new NotImplementedException();
+            return netGate.ConvertToReadOnly();
         }
     }
 }

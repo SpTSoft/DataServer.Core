@@ -13,9 +13,21 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net;
+
 namespace DataServer.Core.Auth
 {
     public class AuthGate : IAuthGate
     {
+        private readonly INetGate _NetGate;
+        private readonly IAuthCore _AuthCore;
+
+        IReadOnlyNetGate IAuthGate.NetGate => this._NetGate.ConvertToReadOnly();
+
+        public AuthGate(INetGate netGate, IAuthCore authCore) 
+        {
+            this._NetGate = netGate;
+            this._AuthCore = authCore;
+        }
     }
 }

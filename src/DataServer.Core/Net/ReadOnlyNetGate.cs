@@ -15,11 +15,7 @@
 
 namespace DataServer.Core.Net
 {
-    public class NetGate : INetGate
+    public class ReadOnlyNetGate : IReadOnlyNetGate
     {
-        public IReadOnlyNetGate ConvertToReadOnly() 
-        {
-            throw new NotImplementedException();
-        }
     }
 }

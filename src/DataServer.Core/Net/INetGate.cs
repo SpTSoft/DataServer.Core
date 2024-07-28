@@ -17,5 +17,6 @@ namespace DataServer.Core.Net
 {
     public interface INetGate
     {
+        public IReadOnlyNetGate ConvertToReadOnly();
     }
 }
