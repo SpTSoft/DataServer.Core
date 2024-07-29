@@ -25,5 +25,25 @@ namespace DataServer.Core.Lockering
         {
             this._NotificationsService = notificationsService;
         }
+
+        public void Run() 
+        {
+            this._NotificationsService.Run();
+        }
+
+        public void Run(params object[] @params) 
+        {
+            this._NotificationsService.Run(@params);
+        }
+
+        public void Stop() 
+        {
+            this._NotificationsService.Stop();
+        }
+
+        public void Stop(params object[] @params) 
+        {
+            this._NotificationsService.Stop(@params);
+        }
     }
 }

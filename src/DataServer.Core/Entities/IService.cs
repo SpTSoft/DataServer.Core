@@ -13,13 +13,16 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Entities;
-using DataServer.Core.Net;
-
-namespace DataServer.Core.Notifications
+namespace DataServer.Core.Entities
 {
-    public interface INotificationsService : IService
+    public interface IService
     {
-        public IGateway Gateway { get; init; }
+        public void Run();
+
+        public void Run(params object[] @params);
+
+        public void Stop();
+
+        public void Stop(params object[] @params);
     }
 }

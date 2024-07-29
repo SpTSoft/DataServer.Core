@@ -13,9 +13,11 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Entities;
+
 namespace DataServer.Core.Lockering
 {
-    public interface ILockerService
+    public interface ILockerService : IService
     {
     }
 }

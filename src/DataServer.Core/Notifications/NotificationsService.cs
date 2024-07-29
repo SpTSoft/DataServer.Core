@@ -26,12 +26,24 @@ namespace DataServer.Core.Notifications
             this.Gateway = gateway;
         }
 
-
-
-
-        public NotificationsService(INetGate netGate) 
+        public void Run() 
         {
-            this._NetGate = netGate;
+            this.Gateway.Run();
+        }
+
+        public void Run(params object[] @params) 
+        {
+            this.Gateway.Run();
+        }
+
+        public void Stop() 
+        {
+            this.Gateway.Stop();
+        }
+
+        public void Stop(params object[] @params) 
+        {
+            this.Gateway.Stop();
         }
     }
 }
