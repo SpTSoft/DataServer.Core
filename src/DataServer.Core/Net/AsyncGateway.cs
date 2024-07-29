@@ -13,17 +13,22 @@
 * limitations under the License.
 */
 
+using System.Collections.ObjectModel;
 using System.Net;
 
 namespace DataServer.Core.Net
 {
     public class AsyncGateway : IAsyncGateway
     {
+        private readonly List<TcpClient> _Clients = new ();
+
         public IPAddress IPAddress { get; init; }
 
         public int Port { get; init; }
 
         public GatewayStatusEnum Status { get; private set; }
+
+        public ReadOnlyCollection<TcpClient> Clients => _Clients.AsReadOnly();
 
         public AsyncGateway(IPAddress iPAddress, int port)
         {
