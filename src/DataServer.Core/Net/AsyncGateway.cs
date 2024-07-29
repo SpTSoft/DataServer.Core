@@ -34,6 +34,14 @@ namespace DataServer.Core.Net
 
         public async void Run() => throw new NotImplementedException();
 
-        public async void Stop() => throw new NotImplementedException();
+        public static int GetAvailablePort() 
+        {
+            int port = 0;
+            TcpListener tcpListener = new(IPAddress.Loopback, port);
+            tcpListener.Start();
+            port = ((IPEndPoint)tcpListener.LocalEndpoint).Port;
+            tcpListener.Stop();
+            return port;
+        }
     }
 }
