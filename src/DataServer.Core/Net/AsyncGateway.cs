@@ -32,12 +32,36 @@ namespace DataServer.Core.Net
 
         public AsyncGateway(IPAddress iPAddress, int port)
         {
+            if (CanUsePort(iPAddress, port) == true)
+            {
             this.IPAddress = iPAddress;
             this.Port = port;
+                this.Status = GatewayStatusEnum.NotStarted;
+            }
+            else { throw new AccessPortException("Port:" + port + " is locked."); }
+        }
+
         }
 
 
         public async void Run() => throw new NotImplementedException();
+        private bool CanUsePort(IPAddress iPAddress, int port) 
+        {
+            bool isCanUsePort = false;
+            using (TcpClient tcpClient = new())
+            {
+                try
+                {
+                    tcpClient.Connect(iPAddress, port);
+                    isCanUsePort = false;
+                }
+                catch (Exception)
+                {
+                    isCanUsePort = true;
+                }
+            }
+            return isCanUsePort;
+        }
 
         public static int GetAvailablePort() 
         {
