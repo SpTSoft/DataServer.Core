@@ -43,6 +43,10 @@ namespace DataServer.Core.Net
 
         }
 
+        public void Stop() 
+        {
+            this.Status = GatewayStatusEnum.Stoped;
+        }
 
         public async void Run() => throw new NotImplementedException();
         private bool CanUsePort(IPAddress iPAddress, int port) 
