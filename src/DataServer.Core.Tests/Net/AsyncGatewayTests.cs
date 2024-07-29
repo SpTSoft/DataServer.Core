@@ -29,6 +29,7 @@ namespace DataServer.Core.Tests.Net
             IPAddress iPAddress = IPAddress.Any;
             int port = 59000;
             IAsyncGateway asyncGateway = new AsyncGateway(iPAddress, port);
+            asyncGateway.Run();
             asyncGateway.Stop();
         }
     }
