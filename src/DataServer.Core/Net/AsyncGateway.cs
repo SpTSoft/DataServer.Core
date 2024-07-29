@@ -14,6 +14,7 @@
 */
 
 using DataServer.Core.Net.Exceptions;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Sockets;
@@ -53,6 +54,10 @@ namespace DataServer.Core.Net
                 try
                 {
                     TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+                    lock (((ICollection)this._Clients).SyncRoot) 
+                    {
+                        this._Clients.Add(tcpClient);
+                    }
                     Task task = Process(tcpClient);
                     await task;
                 }
