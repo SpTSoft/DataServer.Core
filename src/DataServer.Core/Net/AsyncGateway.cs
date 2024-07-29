@@ -13,8 +13,10 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Exceptions;
 using System.Collections.ObjectModel;
 using System.Net;
+using System.Net.Sockets;
 
 namespace DataServer.Core.Net
 {
@@ -34,8 +36,8 @@ namespace DataServer.Core.Net
         {
             if (CanUsePort(iPAddress, port) == true)
             {
-            this.IPAddress = iPAddress;
-            this.Port = port;
+                this.IPAddress = iPAddress;
+                this.Port = port;
                 this.Status = GatewayStatusEnum.NotStarted;
             }
             else { throw new AccessPortException("Port:" + port + " is locked."); }
