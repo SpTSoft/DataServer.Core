@@ -13,20 +13,12 @@
 * limitations under the License.
 */
 
-using System.Net;
-
 namespace DataServer.Core.Net
 {
-    public interface IGateway
+    public enum GatewayStatusEnum
     {
-        public IPAddress IPAddress { get; init; }
-
-        public GatewayStatusEnum Status { get; }
-
-        public int Port { get; init; }
-
-        public void Run();
-
-        public void Stop();
+        NotStarted = 0,
+        Working = 1,
+        Stoped = 2,
     }
 }

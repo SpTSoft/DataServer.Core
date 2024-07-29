@@ -23,6 +23,7 @@ namespace DataServer.Core.Net
 
         public int Port { get; init; }
 
+        public GatewayStatusEnum Status { get; private set; }
 
         public AsyncGateway(IPAddress iPAddress, int port)
         {
