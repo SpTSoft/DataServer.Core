@@ -13,9 +13,9 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Lockering
+namespace DataServer.Core.Net
 {
-    public interface ILockerServer
+    public interface IResponceSerializer
     {
     }
 }

@@ -13,9 +13,14 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net;
+
 namespace DataServer.Core.Auth
 {
     public interface IAuthGate
     {
+        public IGateway Gateway { get; init; }
+
+
     }
 }

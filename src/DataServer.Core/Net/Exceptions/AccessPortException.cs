@@ -13,17 +13,22 @@
 * limitations under the License.
 */
 
-using DataServer.Core.MEF;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
-namespace DataServer.Core.Modeling
+namespace DataServer.Core.Net.Exceptions
 {
-    public class ModuleCompositor : IModuleCompositor
+    [ComVisible(true)]
+    [Serializable]
+    public class AccessPortException : SystemException
     {
-        private readonly ILoader _MEFLoader;
+        public AccessPortException() : base("Port is not available") { }
 
-        public ModuleCompositor(ILoader mEFLoader)
-        {
-            this._MEFLoader = mEFLoader;
-        }
+        public AccessPortException(String message) : base(message) { }
+
+        public AccessPortException(String message, Exception inner) : base(message, inner) { }
+
+        protected AccessPortException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
     }
 }

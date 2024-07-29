@@ -13,17 +13,11 @@
 * limitations under the License.
 */
 
-using DataServer.Core.MEF;
+using DataServer.Core.Entities;
 
-namespace DataServer.Core.Modeling
+namespace DataServer.Core.Lockering
 {
-    public class ModuleCompositor : IModuleCompositor
+    public interface ILockerService : IService
     {
-        private readonly ILoader _MEFLoader;
-
-        public ModuleCompositor(ILoader mEFLoader)
-        {
-            this._MEFLoader = mEFLoader;
-        }
     }
 }

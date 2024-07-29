@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Lockering
+namespace DataServer.Core.Net
 {
-    public class LockerServer : ILockerServer
+    public enum GatewayStatusEnum
     {
+        NotStarted = 0,
+        Working = 1,
+        Stoped = 2,
     }
 }

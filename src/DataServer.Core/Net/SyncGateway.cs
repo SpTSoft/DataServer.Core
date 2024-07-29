@@ -13,17 +13,12 @@
 * limitations under the License.
 */
 
-using DataServer.Core.MEF;
+using System.Net;
 
-namespace DataServer.Core.Modeling
+namespace DataServer.Core.Net
 {
-    public class ModuleCompositor : IModuleCompositor
+    public class SyncGateway //: ISyncGateway
     {
-        private readonly ILoader _MEFLoader;
 
-        public ModuleCompositor(ILoader mEFLoader)
-        {
-            this._MEFLoader = mEFLoader;
-        }
     }
 }

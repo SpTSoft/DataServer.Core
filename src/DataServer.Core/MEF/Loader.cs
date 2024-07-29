@@ -17,5 +17,11 @@ namespace DataServer.Core.MEF
 {
     public class Loader : ILoader
     {
+        private readonly IObserver _Observer;
+
+        public Loader(IObserver observer) 
+        {
+            this._Observer = observer;
+        }
     }
 }

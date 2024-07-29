@@ -13,10 +13,23 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Access;
+using DataServer.Core.Database;
+using DataServer.Core.Modeling;
+
 namespace DataServer.Core
 {
     public class CoreWrapper : ICoreWrapper
     {
+        private readonly IModuleCompositor _ModuleCompositor;
+        private readonly IAccessGate _AccessGate;
+        private readonly IDBGate _DBGate;
 
+        public CoreWrapper(IModuleCompositor moduleCompositor, IDBGate dBGate, IAccessGate accessGate) 
+        {
+            this._ModuleCompositor = moduleCompositor;
+            this._DBGate = dBGate;
+            this._AccessGate = accessGate;
+        }
     }
 }

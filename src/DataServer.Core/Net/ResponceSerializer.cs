@@ -13,9 +13,9 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.MEF
+namespace DataServer.Core.Net
 {
-    public interface IFileLoader
+    public class ResponceSerializer : IResponceSerializer
     {
     }
 }

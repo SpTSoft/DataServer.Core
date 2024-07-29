@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Oscallo.Castle.AddonedKernel" Version="0.9.1" />
+    <PackageReference Include="Oscallo.Castle.AddonedKernel" Version="0.9.2" />
   </ItemGroup>
 
   <ItemGroup>

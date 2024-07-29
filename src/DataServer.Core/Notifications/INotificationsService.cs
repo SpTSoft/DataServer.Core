@@ -13,9 +13,13 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Net
+using DataServer.Core.Entities;
+using DataServer.Core.Net;
+
+namespace DataServer.Core.Notifications
 {
-    public interface INetGate
+    public interface INotificationsService : IService
     {
+        public IGateway Gateway { get; init; }
     }
 }

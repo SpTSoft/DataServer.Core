@@ -13,9 +13,17 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Notifications
+using DataServer.Core.IO;
+
+namespace DataServer.Core.MEF
 {
-    public interface INotificationsCore
+    public class Observer : IObserver
     {
+        private readonly IFileObserver _FileObserver;
+
+        public Observer(IFileObserver fileObserver)
+        {
+            this._FileObserver = fileObserver;
+        }
     }
 }

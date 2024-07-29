@@ -13,17 +13,20 @@
 * limitations under the License.
 */
 
-using DataServer.Core.MEF;
+using System.Net;
 
-namespace DataServer.Core.Modeling
+namespace DataServer.Core.Net
 {
-    public class ModuleCompositor : IModuleCompositor
+    public interface IGateway
     {
-        private readonly ILoader _MEFLoader;
+        public IPAddress IPAddress { get; init; }
 
-        public ModuleCompositor(ILoader mEFLoader)
-        {
-            this._MEFLoader = mEFLoader;
-        }
+        public GatewayStatusEnum Status { get; }
+
+        public int Port { get; init; }
+
+        public void Run();
+
+        public void Stop();
     }
 }

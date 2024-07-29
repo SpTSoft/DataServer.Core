@@ -13,9 +13,37 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net;
+
 namespace DataServer.Core.Notifications
 {
-    public class NotificationsCore : INotificationsCore
+    public class NotificationsService : INotificationsService
     {
+        public IGateway Gateway { get; init; }
+
+        public NotificationsService(IGateway gateway) 
+        {
+            this.Gateway = gateway;
+        }
+
+        public void Run() 
+        {
+            this.Gateway.Run();
+        }
+
+        public void Run(params object[] @params) 
+        {
+            this.Gateway.Run();
+        }
+
+        public void Stop() 
+        {
+            this.Gateway.Stop();
+        }
+
+        public void Stop(params object[] @params) 
+        {
+            this.Gateway.Stop();
+        }
     }
 }

@@ -13,9 +13,13 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.MEF
+using System.Collections.ObjectModel;
+using System.Net.Sockets;
+
+namespace DataServer.Core.Net
 {
-    public class FileLoader : IFileLoader
+    public interface IAsyncGateway : IGateway
     {
+        public ReadOnlyCollection<TcpClient> Clients { get; }
     }
 }

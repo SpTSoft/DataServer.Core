@@ -13,17 +13,16 @@
 * limitations under the License.
 */
 
-using DataServer.Core.MEF;
-
-namespace DataServer.Core.Modeling
+namespace DataServer.Core.Entities
 {
-    public class ModuleCompositor : IModuleCompositor
+    public interface IService
     {
-        private readonly ILoader _MEFLoader;
+        public void Run();
 
-        public ModuleCompositor(ILoader mEFLoader)
-        {
-            this._MEFLoader = mEFLoader;
-        }
+        public void Run(params object[] @params);
+
+        public void Stop();
+
+        public void Stop(params object[] @params);
     }
 }

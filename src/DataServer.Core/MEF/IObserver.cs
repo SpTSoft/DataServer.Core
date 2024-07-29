@@ -13,9 +13,9 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Net
+namespace DataServer.Core.MEF
 {
-    public class NetGate : INetGate
+    public interface IObserver
     {
     }
 }
