@@ -19,14 +19,13 @@ namespace DataServer.Core.Auth
 {
     public class AuthGate : IAuthGate
     {
-        private readonly INetGate _NetGate;
         private readonly IAuthCore _AuthCore;
 
-        IReadOnlyNetGate IAuthGate.NetGate => this._NetGate.ConvertToReadOnly();
+        public IGateway Gateway { get; init; }
 
-        public AuthGate(INetGate netGate, IAuthCore authCore) 
+        public AuthGate(IGateway gateway, IAuthCore authCore) 
         {
-            this._NetGate = netGate;
+            this.Gateway = gateway;
             this._AuthCore = authCore;
         }
     }

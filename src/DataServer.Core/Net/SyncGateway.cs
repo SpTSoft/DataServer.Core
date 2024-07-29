@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
+using System.Net;
+
 namespace DataServer.Core.Net
 {
-    public class ReadOnlyNetGate : IReadOnlyNetGate
+    public class SyncGateway //: ISyncGateway
     {
+
     }
 }

@@ -13,10 +13,18 @@
 * limitations under the License.
 */
 
+using System.Net;
+
 namespace DataServer.Core.Net
 {
-    public interface INetGate
+    public interface IGateway
     {
-        public IReadOnlyNetGate ConvertToReadOnly();
+        public IPAddress IPAddress { get; init; }
+
+        public int Port { get; init; }
+
+        public void Run();
+
+        public void Stop();
     }
 }

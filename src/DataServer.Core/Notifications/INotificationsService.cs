@@ -19,6 +19,6 @@ namespace DataServer.Core.Notifications
 {
     public interface INotificationsService
     {
-        public IReadOnlyNetGate NetGate { get; }
+        public IGateway Gateway { get; init; }
     }
 }

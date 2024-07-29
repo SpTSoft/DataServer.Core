@@ -19,9 +19,15 @@ namespace DataServer.Core.Notifications
 {
     public class NotificationsService : INotificationsService
     {
-        private readonly INetGate _NetGate;
+        public IGateway Gateway { get; init; }
 
-        IReadOnlyNetGate INotificationsService.NetGate => this._NetGate.ConvertToReadOnly();
+        public NotificationsService(IGateway gateway) 
+        {
+            this.Gateway = gateway;
+        }
+
+
+
 
         public NotificationsService(INetGate netGate) 
         {

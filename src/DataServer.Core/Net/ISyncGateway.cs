@@ -15,7 +15,7 @@
 
 namespace DataServer.Core.Net
 {
-    public interface IReadOnlyNetGate
+    public interface ISyncGateway : IGateway
     {
     }
 }

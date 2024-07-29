@@ -13,13 +13,26 @@
 * limitations under the License.
 */
 
+using System.Net;
+
 namespace DataServer.Core.Net
 {
-    public class NetGate : INetGate
+    public class AsyncGateway : IAsyncGateway
     {
-        public IReadOnlyNetGate ConvertToReadOnly() 
+        public IPAddress IPAddress { get; init; }
+
+        public int Port { get; init; }
+
+
+        public AsyncGateway(IPAddress iPAddress, int port)
         {
-            throw new NotImplementedException();
+            this.IPAddress = iPAddress;
+            this.Port = port;
         }
+
+
+        public async void Run() => throw new NotImplementedException();
+
+        public async void Stop() => throw new NotImplementedException();
     }
 }

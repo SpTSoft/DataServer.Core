@@ -19,6 +19,8 @@ namespace DataServer.Core.Auth
 {
     public interface IAuthGate
     {
-        public IReadOnlyNetGate NetGate { get; }
+        public IGateway Gateway { get; init; }
+
+
     }
 }

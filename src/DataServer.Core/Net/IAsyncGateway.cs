@@ -15,11 +15,7 @@
 
 namespace DataServer.Core.Net
 {
-    public static class INetGateExtensions
+    public interface IAsyncGateway : IGateway
     {
-        public static IReadOnlyNetGate Convert(this INetGate netGate) 
-        {
-            return netGate.ConvertToReadOnly();
-        }
     }
 }
