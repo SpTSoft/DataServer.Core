@@ -41,6 +41,24 @@ namespace DataServer.Core.Net
             else { throw new AccessPortException("Port:" + port + " is locked."); }
         }
 
+        public async void Run()
+        {
+            TcpListener tcpListener = new(this.IPAddress, this.Port);
+            tcpListener.Start();
+            this.Status = GatewayStatusEnum.Working;
+            while (this.Status == GatewayStatusEnum.Working)
+            {
+                try
+                {
+                    TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+                    Task task = Process(tcpClient);
+                    await task;
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         public void Stop() 
@@ -48,7 +66,8 @@ namespace DataServer.Core.Net
             this.Status = GatewayStatusEnum.Stoped;
         }
 
-        public async void Run() => throw new NotImplementedException();
+        private async Task Process(TcpClient tcpClient) { throw new NotImplementedException(); }
+
         private bool CanUsePort(IPAddress iPAddress, int port) 
         {
             bool isCanUsePort = false;
