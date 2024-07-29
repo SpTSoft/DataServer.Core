@@ -15,11 +15,6 @@ namespace DataServer.Core.Tests.Net
         }
 
         [TestMethod]
-        public void PortValidation()
-        {
-        }
-
-        [TestMethod]
         public void Running()
         {
             IPAddress iPAddress = IPAddress.Any;
