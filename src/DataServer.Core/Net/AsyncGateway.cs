@@ -35,7 +35,7 @@ namespace DataServer.Core.Net
 
         public AsyncGateway(IPAddress iPAddress, int port)
         {
-            if (CanUsePort(iPAddress, port) == true)
+            if (NetHelper.CanUsePort(iPAddress, port) == true)
             {
                 this.IPAddress = iPAddress;
                 this.Port = port;
@@ -75,32 +75,5 @@ namespace DataServer.Core.Net
 
         private async Task Process(TcpClient tcpClient) { throw new NotImplementedException(); }
 
-        private bool CanUsePort(IPAddress iPAddress, int port) 
-        {
-            bool isCanUsePort = false;
-            using (TcpClient tcpClient = new())
-            {
-                try
-                {
-                    tcpClient.Connect(iPAddress, port);
-                    isCanUsePort = false;
-                }
-                catch (Exception)
-                {
-                    isCanUsePort = true;
-                }
-            }
-            return isCanUsePort;
-        }
-
-        public static int GetAvailablePort() 
-        {
-            int port = 0;
-            TcpListener tcpListener = new(IPAddress.Loopback, port);
-            tcpListener.Start();
-            port = ((IPEndPoint)tcpListener.LocalEndpoint).Port;
-            tcpListener.Stop();
-            return port;
-        }
     }
 }

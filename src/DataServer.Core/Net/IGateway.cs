@@ -28,7 +28,5 @@ namespace DataServer.Core.Net
         public void Run();
 
         public void Stop();
-
-        public static abstract int GetAvailablePort();
     }
 }

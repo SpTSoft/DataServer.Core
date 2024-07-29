@@ -1,7 +1,7 @@
 using DataServer.Core.Net;
 using System.Net;
 
-namespace DataServer.Core.Tests
+namespace DataServer.Core.Tests.Net
 {
     [TestClass]
     public class AsyncGatewayTests
@@ -16,7 +16,7 @@ namespace DataServer.Core.Tests
 
         [TestMethod]
         public void PortValidation()
-        {   
+        {
         }
 
         [TestMethod]
@@ -35,12 +35,6 @@ namespace DataServer.Core.Tests
             int port = 59000;
             IAsyncGateway asyncGateway = new AsyncGateway(iPAddress, port);
             asyncGateway.Stop();
-        }
-
-        [TestMethod]
-        public void GettingAvailablePort()
-        {
-            int port = AsyncGateway.GetAvailablePort();
         }
     }
 }
