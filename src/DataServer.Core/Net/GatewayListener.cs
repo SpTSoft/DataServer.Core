@@ -51,9 +51,11 @@ namespace DataServer.Core.Net
 
 			while (this.Status == GatewayListenerStatusEnum.Working)
 			{
-				try
-				{
+				/*try
+				{*/
 					TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+				/*}
+				catch (Exception) { }*/
 				}
 				catch (Exception) { }
 			}
