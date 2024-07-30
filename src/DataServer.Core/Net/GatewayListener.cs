@@ -53,11 +53,18 @@ namespace DataServer.Core.Net
 			{
 				/*try
 				{*/
-					TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+				TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+
+				NotifyClientConnectedEventArgs eConnected = CreateConnectedArgs(tcpClient);
+				OnClientConnectedBasic(eConnected);
+
+				Task taskRequest = ReceivingRequest(tcpClient);
+				await taskRequest;
+
+				NotifyRequestCreatedEventArgs eCreated = CreateRequestArgs(taskRequest);
+				OnRequestCreatedBasic(eCreated);
 				/*}
 				catch (Exception) { }*/
-				}
-				catch (Exception) { }
 			}
         }
 
@@ -88,6 +95,21 @@ namespace DataServer.Core.Net
 		{
 			OnRequestCreated(eCreated);
 			this.RequestCreated?.Invoke(this, eCreated);
+		}
+
+		private NotifyClientConnectedEventArgs CreateConnectedArgs(TcpClient tcpClient) 
+		{
+			throw new NotImplementedException();
+		}
+
+		private NotifyRequestCreatedEventArgs CreateRequestArgs(Task task) 
+		{
+			throw new NotImplementedException();
+		}
+
+		private Task ReceivingRequest(TcpClient tcpClient) 
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
