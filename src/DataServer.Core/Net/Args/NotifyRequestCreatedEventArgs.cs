@@ -13,12 +13,9 @@
 * limitations under the License.
 */
 
-using System.Net;
-
-namespace DataServer.Core.Net
+namespace DataServer.Core.Net.Args
 {
-    public class SyncGateway //: ISyncGateway
+    public class NotifyRequestCreatedEventArgs : EventArgs
     {
-
     }
 }

@@ -13,13 +13,9 @@
 * limitations under the License.
 */
 
-using System.Collections.ObjectModel;
-using System.Net.Sockets;
-
-namespace DataServer.Core.Net
+namespace DataServer.Core.Net.Entities
 {
-    public interface IAsyncGateway : IGateway
+    public interface IClient
     {
-        public ReadOnlyCollection<TcpClient> Clients { get; }
     }
 }

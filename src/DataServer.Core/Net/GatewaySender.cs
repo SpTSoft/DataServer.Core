@@ -13,12 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-
 namespace DataServer.Core.Net
 {
-    public interface IResponceSerializer
+    public class GatewaySender : IGatewaySender
     {
-        public string Serialize(IResponce responce);
     }
 }

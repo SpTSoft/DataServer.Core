@@ -13,12 +13,12 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Entities;
+
 namespace DataServer.Core.Net
 {
-    public enum GatewayStatusEnum
+    public interface IRequestDeserializer
     {
-        NotStarted = 0,
-        Working = 1,
-        Stoped = 2,
+        public IRequest Deserialize(string request);
     }
 }

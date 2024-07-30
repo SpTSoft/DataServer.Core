@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Entities;
+
 namespace DataServer.Core.Net
 {
     public class ResponceSerializer : IResponceSerializer
     {
+        public string Serialize(IResponce responce) => throw new NotImplementedException();
     }
 }
