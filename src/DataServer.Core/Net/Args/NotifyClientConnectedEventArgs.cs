@@ -13,12 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-
-namespace DataServer.Core.Net
+namespace DataServer.Core.Net.Args
 {
-    public interface IResponceSerializer
+    public class NotifyClientConnectedEventArgs : EventArgs
     {
-        public string Serialize(IResponce responce);
     }
 }

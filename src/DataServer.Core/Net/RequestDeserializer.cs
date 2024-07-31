@@ -13,9 +13,12 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Entities;
+
 namespace DataServer.Core.Net
 {
-    public interface ISyncGateway : IGateway
+    public class RequestDeserializer : IRequestDeserializer
     {
+        public IRequest Deserialize(string request) => throw new NotImplementedException();
     }
 }

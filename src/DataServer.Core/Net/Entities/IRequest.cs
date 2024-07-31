@@ -13,12 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-
-namespace DataServer.Core.Net
+namespace DataServer.Core.Net.Entities
 {
-    public interface IResponceSerializer
+    public interface IRequest
     {
-        public string Serialize(IResponce responce);
     }
 }

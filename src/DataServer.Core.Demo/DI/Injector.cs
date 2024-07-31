@@ -8,34 +8,83 @@ namespace DataServer.Core.Demo.DI
 {
     public class Injector : IInjector
     {
-        public static void Register(IWindsorContainer windsorContainer, params IRegistration[] registrations)
-        {
-            windsorContainer.Register(registrations);
-        }
+		private readonly IWindsorContainer _WindsorContainer;
 
-        public static T Resolve<T>(IWindsorContainer windsorContainer) 
-        {
-            return windsorContainer.Resolve<T>();
-        }
+		public Injector(IWindsorContainer windsorContainer)
+		{
+			this._WindsorContainer = windsorContainer;
+		}
 
-        public void AddChildContainer(IWindsorContainer windsorContainer) => throw new NotImplementedException();
+		public static void Register(IWindsorContainer windsorContainer, params IRegistration[] registrations)
+		{
+			windsorContainer.Register(registrations);
+		}
 
-        public void AddFacility<TFacility>() where TFacility : IFacility, new() => throw new NotImplementedException();
+		public static T Resolve<T>(IWindsorContainer windsorContainer)
+		{
+			return windsorContainer.Resolve<T>();
+		}
 
-        public void AddFacilityIfAbsent<TFacility>() where TFacility : IFacility, new() => throw new NotImplementedException();
+		void IRegistrar.AddFacility<TFacility>()
+		{
+			this._WindsorContainer.AddFacility<TFacility>();
+		}
 
-        public void Dispose() => throw new NotImplementedException();
+		void IRegistrar.AddFacilityIfAbsent<TFacility>()
+		{
+			IRegistrar dIRegistrar = this;
+			if (((IRegistrar)(this)).HasFacility<TFacility>() == false)
+			{
+				dIRegistrar.AddFacility<TFacility>();
+			}
+		}
 
-        public bool HasComponent<T>() => throw new NotImplementedException();
+		void IDisposable.Dispose() => this._WindsorContainer?.Dispose();
 
-        public bool HasFacility<TFacility>() where TFacility : IFacility, new() => throw new NotImplementedException();
+		public bool HasComponent<T>()
+		{
+			return this._WindsorContainer.Kernel.HasComponent(typeof(T));
+		}
 
-        public void Register(params IRegistration[] registrations) => throw new NotImplementedException();
+		public bool HasFacility<TFacility>() where TFacility : IFacility, new()
+		{
+			foreach (IFacility facility in this._WindsorContainer.Kernel.GetFacilities())
+			{
+				if (facility.GetType() == typeof(TFacility))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
-        public void RegisterIfAbsent<T>(params IRegistration[] registrations) => throw new NotImplementedException();
+		void IRegistrar.Register(params IRegistration[] registrations)
+		{
+			this._WindsorContainer.Register(registrations);
+		}
 
-        public void RemoveChildContainer(IWindsorContainer windsorContainer) => throw new NotImplementedException();
+		void IRegistrar.RegisterIfAbsent<T>(params IRegistration[] registrations)
+		{
+			IRegistrar dIRegistrar = this;
+			if (HasComponent<T>() == false)
+			{
+				dIRegistrar.Register(registrations);
+			}
+		}
 
-        public T Resolve<T>() => throw new NotImplementedException();
-    }
+		void IContainerRegistrar.AddChildContainer(IWindsorContainer windsorContainer) => this._WindsorContainer.AddChildContainer(windsorContainer);
+
+		void IContainerRegistrar.RemoveChildContainer(IWindsorContainer windsorContainer) => this._WindsorContainer.RemoveChildContainer(windsorContainer);
+
+		T IResolver.Resolve<T>() => this._WindsorContainer.Resolve<T>();
+
+		T IResolver.Resolve<T>(string key) => this._WindsorContainer.Resolve<T>(key);
+
+		T IResolver.Resolve<T>(Arguments args) => this._WindsorContainer.Resolve<T>(args);
+
+		public virtual void Dispose()
+		{
+			((IDisposable)this).Dispose();
+		}
+	}
 }

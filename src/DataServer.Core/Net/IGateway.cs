@@ -13,17 +13,14 @@
 * limitations under the License.
 */
 
-using System.Net;
+using DataServer.Core.Net.Entities;
+using System.Collections.ObjectModel;
 
 namespace DataServer.Core.Net
 {
     public interface IGateway
     {
-        public IPAddress IPAddress { get; init; }
-
-        public GatewayStatusEnum Status { get; }
-
-        public int Port { get; init; }
+        public ReadOnlyCollection<IClient> Clients { get; }
 
         public void Run();
 

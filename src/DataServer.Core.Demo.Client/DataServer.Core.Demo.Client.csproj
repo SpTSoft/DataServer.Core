@@ -7,12 +7,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Oscallo.Castle.AddonedKernel" Version="0.9.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DataServer.Core\DataServer.Core.csproj" />
-  </ItemGroup>
-
 </Project>

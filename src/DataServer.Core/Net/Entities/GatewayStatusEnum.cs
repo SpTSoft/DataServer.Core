@@ -13,12 +13,12 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-
-namespace DataServer.Core.Net
+namespace DataServer.Core.Net.Entities
 {
-    public interface IResponceSerializer
+    public enum GatewayStatusEnum
     {
-        public string Serialize(IResponce responce);
+        NotStarted = 0,
+        Working = 1,
+        Stoped = 2,
     }
 }

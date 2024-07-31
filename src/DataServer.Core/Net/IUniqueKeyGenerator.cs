@@ -13,12 +13,12 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-
 namespace DataServer.Core.Net
 {
-    public interface IResponceSerializer
-    {
-        public string Serialize(IResponce responce);
-    }
+	public interface IUniqueKeyGenerator
+	{
+		public object GenerateUniqueKey();
+
+		public object GenerateUniqueKey(params object[] objects);
+	}
 }
