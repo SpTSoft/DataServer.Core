@@ -24,4 +24,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Oscallo.Castle.AddonedKernel" Version="0.9.3" />
+  </ItemGroup>
+
 </Project>
