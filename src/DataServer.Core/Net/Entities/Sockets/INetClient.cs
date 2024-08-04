@@ -32,5 +32,6 @@ namespace DataServer.Core.Net.Entities.Sockets
 
 		public Socket Client { get; set; }
 
+		public bool Connected { get; }
 	}
 }

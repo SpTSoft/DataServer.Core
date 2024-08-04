@@ -18,8 +18,10 @@ using System.Net.Sockets;
 
 namespace DataServer.Core.Net.Entities.Sockets
 {
-	public class UDPClient : UdpClient, IUDPClient 
+	public class UDPClient : UdpClient, IUDPClient
 	{
+		public bool Connected => this.Client.Connected;
+
 		public UDPClient() : base() { }
 
 		public UDPClient(AddressFamily family) : base(family) { }
