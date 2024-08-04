@@ -15,9 +15,9 @@
 
 using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
+using DataServer.Core.Net.Entities.Sockets;
 using DataServer.Core.Net.Exceptions;
 using System.Net;
-using System.Net.Sockets;
 
 namespace DataServer.Core.Net
 {
@@ -45,7 +45,7 @@ namespace DataServer.Core.Net
 
         public async void Run() 
         {
-            TcpListener listener = new(this.IPAddress, this.Port);
+            TCPListener listener = new(this.IPAddress, this.Port);
             listener.Start();
 			this.Status = GatewayListenerStatusEnum.Working;
 
@@ -53,7 +53,7 @@ namespace DataServer.Core.Net
 			{
 				/*try
 				{*/
-				TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+				TCPClient tcpClient = await listener.AcceptTcpClientAsync();
 
 				NotifyClientConnectedEventArgs eConnected = CreateConnectedArgs(tcpClient);
 				OnClientConnectedBasic(eConnected);
@@ -97,7 +97,7 @@ namespace DataServer.Core.Net
 			this.RequestCreated?.Invoke(this, eCreated);
 		}
 
-		private NotifyClientConnectedEventArgs CreateConnectedArgs(TcpClient tcpClient) 
+		private NotifyClientConnectedEventArgs CreateConnectedArgs(INetClient netClient) 
 		{
 			throw new NotImplementedException();
 		}
@@ -107,7 +107,7 @@ namespace DataServer.Core.Net
 			throw new NotImplementedException();
 		}
 
-		private Task ReceivingRequest(TcpClient tcpClient) 
+		private Task ReceivingRequest(INetClient tcpClient) 
 		{
 			throw new NotImplementedException();
 		}
