@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>$(AssemblyName)</Title>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Company>SpTSoftware</Company>
     <Copyright>@ SpTSoftware</Copyright>
     <PackageProjectUrl>https://github.com/SpTSoft/DataServer.Core</PackageProjectUrl>
@@ -22,6 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Oscallo.Castle.AddonedKernel" Version="0.9.3" />
   </ItemGroup>
 
 </Project>

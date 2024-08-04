@@ -13,18 +13,9 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities.Sockets;
-
-namespace DataServer.Core.Net.Args
+namespace DataServer.Core.Net.Entities.Sockets
 {
-    public class NotifyClientConnectedEventArgs : EventArgs
-    {
-		public INetClient Client { get; set; }
-
-		public NotifyClientConnectedEventArgs(INetClient client) 
-		{ 
-			this.Client = client;
-		}
-
-    }
+	public interface INetListener
+	{
+	}
 }

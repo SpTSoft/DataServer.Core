@@ -13,18 +13,25 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities.Sockets;
+using System.Net;
+using System.Net.Sockets;
 
-namespace DataServer.Core.Net.Args
+namespace DataServer.Core.Net.Entities.Sockets
 {
-    public class NotifyClientConnectedEventArgs : EventArgs
-    {
-		public INetClient Client { get; set; }
+	public interface INetClient : IDisposable
+	{
+		public void Connect(string hostname, int port);
 
-		public NotifyClientConnectedEventArgs(INetClient client) 
-		{ 
-			this.Client = client;
-		}
+		public void Connect(IPAddress addr, int port);
 
-    }
+		public void Connect(IPEndPoint endPoint);
+
+		public void Close();
+
+		public bool ExclusiveAddressUse { get; set; }
+
+		public Socket Client { get; set; }
+
+		public bool Connected { get; }
+	}
 }

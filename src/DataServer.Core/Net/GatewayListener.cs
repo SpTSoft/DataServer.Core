@@ -15,13 +15,13 @@
 
 using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
+using DataServer.Core.Net.Entities.Sockets;
 using DataServer.Core.Net.Exceptions;
 using System.Net;
-using System.Net.Sockets;
 
 namespace DataServer.Core.Net
 {
-    public class GatewayListener : IGatewayListener
+	public class GatewayListener : IGatewayListener
     {
         public event NotifyClientConnected? ClientConnected;
         public event NotifyClientDisconnected? ClientDisconnected;
@@ -45,7 +45,7 @@ namespace DataServer.Core.Net
 
         public async void Run() 
         {
-            TcpListener listener = new(this.IPAddress, this.Port);
+            TCPListener listener = new(this.IPAddress, this.Port);
             listener.Start();
 			this.Status = GatewayListenerStatusEnum.Working;
 
@@ -53,7 +53,7 @@ namespace DataServer.Core.Net
 			{
 				/*try
 				{*/
-				TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+				TCPClient tcpClient = await listener.AcceptTcpClientAsync();
 
 				NotifyClientConnectedEventArgs eConnected = CreateConnectedArgs(tcpClient);
 				OnClientConnectedBasic(eConnected);
@@ -97,9 +97,10 @@ namespace DataServer.Core.Net
 			this.RequestCreated?.Invoke(this, eCreated);
 		}
 
-		private NotifyClientConnectedEventArgs CreateConnectedArgs(TcpClient tcpClient) 
+		private NotifyClientConnectedEventArgs CreateConnectedArgs(INetClient netClient) 
 		{
-			throw new NotImplementedException();
+			NotifyClientConnectedEventArgs e = new(netClient);
+			return e;
 		}
 
 		private NotifyRequestCreatedEventArgs CreateRequestArgs(Task task) 
@@ -107,7 +108,53 @@ namespace DataServer.Core.Net
 			throw new NotImplementedException();
 		}
 
-		private Task ReceivingRequest(TcpClient tcpClient) 
+		protected Task ReceivingRequest(INetClient netClient) 
+		{
+			if (netClient as ITCPClient != null)
+			{
+				return ReceivingRequest((ITCPClient)netClient);
+			}
+			else if(netClient as IUDPClient != null)
+			{
+				return ReceivingRequest((IUDPClient)netClient);
+			}
+			throw new NotImplementedException();
+		}
+
+		protected async Task ReceivingRequest(ITCPClient tcpClient) 
+		{
+			///string clientEndPoint = tcpClient.Client.RemoteEndPoint.ToString(); Console.WriteLine("Received connection request from " + clientEndPoint);
+			/*try
+			{
+				NetworkStream networkStream = tcpClient.GetStream();
+				StreamReader reader = new StreamReader(networkStream);
+				StreamWriter writer = new StreamWriter(networkStream);
+				writer.AutoFlush = true;
+				while (true)
+				{
+					string request = await reader.ReadLineAsync();
+					if (request != null)
+					{
+						Console.WriteLine("Received service request: " + request);
+						string response = Response(request);
+						Console.WriteLine("Computed response is: " + response + "\n");
+						await writer.WriteLineAsync(response);
+					}
+					else
+						break; // клиент закрыл соединение
+				}
+				tcpClient.Close();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				if (tcpClient.Connected)
+					tcpClient.Close();
+			}*/
+			throw new NotImplementedException();
+		}
+
+		protected async Task ReceivingRequest(IUDPClient netClient)
 		{
 			throw new NotImplementedException();
 		}

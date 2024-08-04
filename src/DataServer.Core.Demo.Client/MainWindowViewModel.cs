@@ -16,7 +16,7 @@ namespace DataServer.Core.Demo.Client
 
 		private readonly MainWindowModel _Model = new();
 
-		internal Task<string> _TaskResponse;
+		internal Task<string>? _TaskResponse;
 
 		public int Port
 		{
@@ -115,7 +115,7 @@ namespace DataServer.Core.Demo.Client
 				writer.AutoFlush = true;
 				string requestData = "method=";
 				await writer.WriteLineAsync(requestData);
-				string response = await reader.ReadLineAsync();
+				string? response = await reader.ReadLineAsync();
 				client.Close();
 				return response;
 			}
