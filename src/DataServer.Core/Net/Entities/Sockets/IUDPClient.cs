@@ -59,5 +59,17 @@ namespace DataServer.Core.Net.Entities.Sockets
 		public Task<int> SendAsync(byte[] datagram, int bytes, string hostname, int port);
 
 		public Task<UdpReceiveResult> ReceiveAsync();
+
+		public void AllowNatTraversal(bool allowed);
+
+		public int Available { get; }
+
+		public short Ttl { get; set; }
+
+		public bool DontFragment { get; set; }
+
+		public bool MulticastLoopback { get; set; }
+
+		public bool EnableBroadcast { get; set; }
 	}
 }
