@@ -99,7 +99,8 @@ namespace DataServer.Core.Net
 
 		private NotifyClientConnectedEventArgs CreateConnectedArgs(INetClient netClient) 
 		{
-			throw new NotImplementedException();
+			NotifyClientConnectedEventArgs e = new(netClient);
+			return e;
 		}
 
 		private NotifyRequestCreatedEventArgs CreateRequestArgs(Task task) 
