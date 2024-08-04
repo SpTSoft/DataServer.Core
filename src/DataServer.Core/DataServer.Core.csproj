@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>$(AssemblyName)</Title>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Company>SpTSoftware</Company>
     <Copyright>@ SpTSoftware</Copyright>
     <PackageProjectUrl>https://github.com/SpTSoft/DataServer.Core</PackageProjectUrl>
