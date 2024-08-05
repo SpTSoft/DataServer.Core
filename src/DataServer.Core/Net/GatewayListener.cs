@@ -26,24 +26,54 @@ namespace DataServer.Core.Net
 	public class GatewayListener : IGatewayListener
     {
 		private readonly ILogger _Logger;
-
-		public readonly IGatewayListenerArgsFactory ArgsFactory;
+		private readonly IGatewayListenerArgsFactory _ArgsFactory;
 
         public event NotifyClientConnected? ClientConnected;
         public event NotifyClientDisconnected? ClientDisconnected;
         public event NotifyRequestCreated? RequestCreated;
 
-        public IPAddress IPAddress { get; private set; }
+		private IPAddress _IPAddress;
+		private PortNumber _Port;
 
-        public PortNumber Port { get; private set;}
+		private GatewayListenerStatusEnum _Status = GatewayListenerStatusEnum.NotStarted;
 
-		public GatewayListenerStatusEnum Status { get; private set; } = GatewayListenerStatusEnum.NotStarted;
+		public IPAddress IPAddress 
+		{
+			get { return this._IPAddress; }
+			private set
+			{
+				this._IPAddress = value;
+				this._Logger.Log("GatewayListener: IPAddress Setted:" + value.ToString());
+			}
+		}
+
+        public PortNumber Port
+		{
+			get { return this._Port; }
+			private set
+			{
+				this._Port = value;
+				this._Logger.Log("GatewayListener: Port Setted:" + value.ToString());
+			}
+		}
+
+		public GatewayListenerStatusEnum Status 
+		{ 
+			get {  return this._Status; } 
+			private set 
+			{
+				this._Status = value;
+				this._Logger.Log("GatewayListener: Status Setted:" + value.ToString());
+			}
+		} 
 
 		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory, ILogger logger) : 
 			this(settings.IPAddress, settings.Port, argsFactory, logger) { }
 
-		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory, ILogger logger) 
-        {
+		#pragma warning disable CS8618
+		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory, ILogger logger)
+		#pragma warning restore CS8618
+		{
 			this._Logger = logger;
 			
 			PortNumber portNumber = port;
@@ -55,31 +85,38 @@ namespace DataServer.Core.Net
             }
             else 
 			{
-				throw ExceptionLog<AccessPortException>("Port:" + portNumber + " is locked.");
+				throw ExceptionLog<AccessPortException>("GatewayListener: Port:" + portNumber + " is locked.");
 			}
 
-			this.ArgsFactory = argsFactory;
+			this._ArgsFactory = argsFactory;
         }
 
         public async void Run() 
         {
+			this._Logger.Log("GatewayListener: Calling Async Method Run");
+
             TCPListener listener = new(this.IPAddress, this.Port);
             listener.Start();
+
+			this._Logger.Log("GatewayListener: TCPListener Start:" + this.IPAddress.ToString() + "/" + this.Port.ToString());
+
 			this.Status = GatewayListenerStatusEnum.Working;
+			
 
 			while (this.Status == GatewayListenerStatusEnum.Working)
 			{
 				/*try
 				{*/
 				TCPClient tcpClient = await listener.AcceptTcpClientAsync();
+				this._Logger.Log("GatewayListener: TCPListener Accept Client:" + tcpClient.ToString());
 
-				NotifyClientConnectedEventArgs eConnected = this.ArgsFactory.CreateConnectedEventArgs(tcpClient);
+				NotifyClientConnectedEventArgs eConnected = this._ArgsFactory.CreateConnectedEventArgs(tcpClient);
 				OnClientConnectedBasic(eConnected);
 
 				Task taskRequest = ReceivingRequest(tcpClient);
 				await taskRequest;
 
-				NotifyRequestCreatedEventArgs eCreated = this.ArgsFactory.CreateRequestEventArgs(taskRequest);
+				NotifyRequestCreatedEventArgs eCreated = this._ArgsFactory.CreateRequestEventArgs(taskRequest);
 				OnRequestCreatedBasic(eCreated);
 				/*}
 				catch (Exception) { }*/
