@@ -35,7 +35,7 @@ namespace DataServer.Core.Net
 		private IPAddress _IPAddress;
 		private PortNumber _Port;
 
-		private GatewayListenerStatusEnum _Status = GatewayListenerStatusEnum.NotStarted;
+		private GatewayListenerStatusEnum _Status;
 
 		public IPAddress IPAddress 
 		{
@@ -82,7 +82,7 @@ namespace DataServer.Core.Net
             {
                 this.IPAddress = iPAddress;
                 this.Port = portNumber;
-            }
+			this.Status = GatewayListenerStatusEnum.NotStarted;
             else 
 			{
 				throw ExceptionLog<AccessPortException>("GatewayListener: Port:" + portNumber + " is locked.");
