@@ -31,7 +31,7 @@ namespace DataServer.Core.Demo
 			this._Injector.RegisterIfAbsent<IGatewayListenerSettings>(Component.For<IGatewayListenerSettings>().ImplementedBy<GatewayListenerSettings>().LifeStyle.Singleton.
 				DependsOn(
 					Dependency.OnValue("IPAddress", IPAddress.Parse("127.0.0.1")),
-					Dependency.OnValue("Port", (PortNumber)NetHelper.GetAvailablePort())
+					Dependency.OnValue("Port", NetHelper.GetAvailablePort())
 				));
 
 			this._Injector.RegisterIfAbsent<IGatewayListenerArgsFactory>(Component.For<IGatewayListenerArgsFactory>().ImplementedBy<GatewayListenerArgsFactory>().LifeStyle.Singleton);
