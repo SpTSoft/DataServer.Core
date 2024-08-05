@@ -4,7 +4,6 @@ using DataServer.Core.Demo.DI;
 using DataServer.Core.Demo.MainMVVM;
 using DataServer.Core.Net;
 using DataServer.Core.Net.Args;
-using DataServer.Core.Net.Entities;
 using DataServer.Core.Net.Settings;
 using Oscallo.Castle.AddonedKernel.Injectors;
 using System.Net;
