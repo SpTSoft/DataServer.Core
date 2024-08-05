@@ -41,22 +41,23 @@ namespace DataServer.Core.Net
 		{
 			get { return this._IPAddress; }
 			private set { SetVariable(ref this._IPAddress, value); }
-			}
+		}
 
         public PortNumber Port
 		{
 			get { return this._Port; }
 			private set { SetVariable(ref this._Port, value); }
-			}
+		}
 
 		public GatewayListenerStatusEnum Status 
 		{ 
 			get {  return this._Status; } 
 			private set { SetVariable(ref this._Status, value); }
-			}
+		} 
 
 		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory, ILogger logger) : 
-			this(settings.IPAddress, settings.Port, argsFactory, logger) { }
+			   this(settings.IPAddress, settings.Port, argsFactory, logger) { }
+
 
 		#pragma warning disable CS8618
 		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory, ILogger logger)
@@ -66,15 +67,11 @@ namespace DataServer.Core.Net
 			
 			PortNumber portNumber = port;
 
-			if (NetHelper.CanUsePort(iPAddress, portNumber))
-            {
-                this.IPAddress = iPAddress;
-                this.Port = portNumber;
+			if (NetHelper.CanUsePort(iPAddress, portNumber) == false) { throw ExceptionLog<AccessPortException>("GatewayListener: Port:" + portNumber + " is locked."); }
+
+			this.IPAddress = iPAddress;
+			this.Port = portNumber;
 			this.Status = GatewayListenerStatusEnum.NotStarted;
-            else 
-			{
-				throw ExceptionLog<AccessPortException>("GatewayListener: Port:" + portNumber + " is locked.");
-			}
 
 			this._ArgsFactory = argsFactory;
         }
@@ -113,6 +110,7 @@ namespace DataServer.Core.Net
 
 		public void Stop() 
 		{
+			this._Logger.Log("GatewayListener: Calling Async Method Stop");
 			this.Status = GatewayListenerStatusEnum.Stoped;
 		}
 
