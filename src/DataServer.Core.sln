@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{5952F0A3-7511-409E-8043-ECD8E273EDC5}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
+		..\docs\NUGET_README.md = ..\docs\NUGET_README.md
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
@@ -15,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataServer.Core.Demo", "Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataServer.Core.Tests", "DataServer.Core.Tests\DataServer.Core.Tests.csproj", "{86C99E4B-459C-4B70-9C1E-C48FE482679B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataServer.Core.Demo.Client", "DataServer.Core.Demo.Client\DataServer.Core.Demo.Client.csproj", "{D5D82E5B-EEB4-4384-9B13-C17C0CE42D0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataServer.Core.Demo.Client", "DataServer.Core.Demo.Client\DataServer.Core.Demo.Client.csproj", "{D5D82E5B-EEB4-4384-9B13-C17C0CE42D0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

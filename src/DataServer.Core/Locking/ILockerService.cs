@@ -15,9 +15,9 @@
 
 using DataServer.Core.Entities;
 
-namespace DataServer.Core.Lockering
+namespace DataServer.Core.Locking
 {
-    public interface ILockerService : IService
-    {
-    }
+	public interface ILockerService : IService
+	{
+	}
 }

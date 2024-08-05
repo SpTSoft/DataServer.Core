@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using DataServer.Core.Demo.DI;
 using DataServer.Core.Demo.MainMVVM;
+using DataServer.Core.Logging;
 using DataServer.Core.Net;
 using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
@@ -27,6 +28,8 @@ namespace DataServer.Core.Demo
             Injector.Register(container, Component.For<IInjector>().ImplementedBy<Injector>().LifeStyle.Singleton);
 
 			this._Injector = Injector.Resolve<IInjector>(container);
+
+			this._Injector.RegisterIfAbsent<ILogger>(Component.For<ILogger>().ImplementedBy<NullLogger>().LifeStyle.Singleton);
 
 			this._Injector.RegisterIfAbsent<IGatewayListenerSettings>(Component.For<IGatewayListenerSettings>().ImplementedBy<GatewayListenerSettings>().LifeStyle.Singleton.
 				DependsOn(

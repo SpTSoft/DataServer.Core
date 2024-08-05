@@ -13,22 +13,14 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Auth;
-using DataServer.Core.Locking;
-
-namespace DataServer.Core.Access
+namespace DataServer.Core.Logging
 {
-	public class AccessGate : IAccessGate
-    {
-        private readonly IAccessCore _AccessCore;
-        private readonly ILockerService _LockerService;
-        private readonly IAuthGate _AuthGate;
+	public class NullLogger : ILogger
+	{
+		public void Log(string message) { }
 
-        public AccessGate(IAccessCore accessCore, ILockerService lockerService, IAuthGate authGate)
-        {
-            this._AccessCore = accessCore;
-            this._LockerService = lockerService;
-            this._AuthGate = authGate;
-        }
-    }
+		public void Log(LoggerMessage loggerMessage) { }
+
+		public void Log(LoggerExceptionMessage exceptionMessage) { }
+	}
 }

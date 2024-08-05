@@ -13,6 +13,7 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Logging;
 using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
 using DataServer.Core.Net.Entities.Sockets;
@@ -24,54 +25,83 @@ namespace DataServer.Core.Net
 {
 	public class GatewayListener : IGatewayListener
     {
-		public readonly IGatewayListenerArgsFactory ArgsFactory;
+		private readonly ILogger _Logger;
+		private readonly IGatewayListenerArgsFactory _ArgsFactory;
 
         public event NotifyClientConnected? ClientConnected;
         public event NotifyClientDisconnected? ClientDisconnected;
         public event NotifyRequestCreated? RequestCreated;
 
-        public IPAddress IPAddress { get; private set; }
+		private IPAddress _IPAddress;
+		private PortNumber _Port;
 
-        public PortNumber Port { get; private set;}
+		private GatewayListenerStatusEnum _Status;
 
-		public GatewayListenerStatusEnum Status { get; private set; } = GatewayListenerStatusEnum.NotStarted;
+		public IPAddress IPAddress 
+		{
+			get { return this._IPAddress; }
+			private set { SetVariable(ref this._IPAddress, value); }
+		}
 
-		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory) : 
-			this(settings.IPAddress, settings.Port, argsFactory) { }
+        public PortNumber Port
+		{
+			get { return this._Port; }
+			private set { SetVariable(ref this._Port, value); }
+		}
 
-		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory) 
-        {
+		public GatewayListenerStatusEnum Status 
+		{ 
+			get {  return this._Status; } 
+			private set { SetVariable(ref this._Status, value); }
+		} 
+
+		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory, ILogger logger) : 
+			   this(settings.IPAddress, settings.Port, argsFactory, logger) { }
+
+
+		#pragma warning disable CS8618
+		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory, ILogger logger)
+		#pragma warning restore CS8618
+		{
+			this._Logger = logger;
+			
 			PortNumber portNumber = port;
 
-			if (NetHelper.CanUsePort(iPAddress, portNumber))
-            {
-                this.IPAddress = iPAddress;
-                this.Port = portNumber;
-            }
-            else { throw new AccessPortException("Port:" + portNumber + " is locked."); }
+			if (NetHelper.CanUsePort(iPAddress, portNumber) == false) { throw ExceptionLog<AccessPortException>("GatewayListener: Port:" + portNumber + " is locked."); }
 
-			this.ArgsFactory = argsFactory;
+			this.IPAddress = iPAddress;
+			this.Port = portNumber;
+			this.Status = GatewayListenerStatusEnum.NotStarted;
+
+			this._ArgsFactory = argsFactory;
         }
 
         public async void Run() 
         {
+			this._Logger.Log("GatewayListener: Calling Async Method Run");
+
             TCPListener listener = new(this.IPAddress, this.Port);
             listener.Start();
+
+			this._Logger.Log("GatewayListener: TCPListener Start:" + this.IPAddress.ToString() + "/" + this.Port.ToString());
+
 			this.Status = GatewayListenerStatusEnum.Working;
+			
 
 			while (this.Status == GatewayListenerStatusEnum.Working)
 			{
 				/*try
 				{*/
 				TCPClient tcpClient = await listener.AcceptTcpClientAsync();
+				this._Logger.Log("GatewayListener: TCPListener Accept Client:" + tcpClient.ToString());
 
-				NotifyClientConnectedEventArgs eConnected = this.ArgsFactory.CreateConnectedEventArgs(tcpClient);
+				NotifyClientConnectedEventArgs eConnected = this._ArgsFactory.CreateConnectedEventArgs(tcpClient);
 				OnClientConnectedBasic(eConnected);
 
 				Task taskRequest = ReceivingRequest(tcpClient);
 				await taskRequest;
 
-				NotifyRequestCreatedEventArgs eCreated = this.ArgsFactory.CreateRequestEventArgs(taskRequest);
+				NotifyRequestCreatedEventArgs eCreated = this._ArgsFactory.CreateRequestEventArgs(taskRequest);
 				OnRequestCreatedBasic(eCreated);
 				/*}
 				catch (Exception) { }*/
@@ -80,6 +110,7 @@ namespace DataServer.Core.Net
 
 		public void Stop() 
 		{
+			this._Logger.Log("GatewayListener: Calling Async Method Stop");
 			this.Status = GatewayListenerStatusEnum.Stoped;
 		}
 
@@ -156,6 +187,23 @@ namespace DataServer.Core.Net
 		protected async Task ReceivingRequest(IUDPClient netClient)
 		{
 			throw new NotImplementedException();
+		}
+
+		private T ExceptionLog<T>(string message) where T : Exception
+		{
+			object[] args = { message };
+
+			T exception = (T)Activator.CreateInstance(typeof(T), args);
+
+			this._Logger.Log(new LoggerExceptionMessage(message, exception));
+
+			return exception;
+		}
+
+		private void SetVariable<T>(ref T variable, T value) 
+		{
+			variable = value;
+			this._Logger.Log("GatewayListener: " + typeof(T).Name + " Setted:" + value.ToString());
 		}
 	}
 }

@@ -18,7 +18,7 @@ using System.Net.Sockets;
 
 namespace DataServer.Core.Net.Entities.Sockets
 {
-	public interface ITCPListener
+	public interface ITCPListener : INetListener
 	{
 		public abstract static TCPListener Create(int port);
 
