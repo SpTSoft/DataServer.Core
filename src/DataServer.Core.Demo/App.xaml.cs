@@ -2,8 +2,10 @@
 using Castle.Windsor;
 using DataServer.Core.Demo.DI;
 using DataServer.Core.Demo.MainMVVM;
+using DataServer.Core.Logging;
 using DataServer.Core.Net;
 using DataServer.Core.Net.Args;
+using DataServer.Core.Net.Entities;
 using DataServer.Core.Net.Settings;
 using Oscallo.Castle.AddonedKernel.Injectors;
 using System.Net;
@@ -27,10 +29,12 @@ namespace DataServer.Core.Demo
 
 			this._Injector = Injector.Resolve<IInjector>(container);
 
+			this._Injector.RegisterIfAbsent<ILogger>(Component.For<ILogger>().ImplementedBy<NullLogger>().LifeStyle.Singleton);
+
 			this._Injector.RegisterIfAbsent<IGatewayListenerSettings>(Component.For<IGatewayListenerSettings>().ImplementedBy<GatewayListenerSettings>().LifeStyle.Singleton.
 				DependsOn(
 					Dependency.OnValue("IPAddress", IPAddress.Parse("127.0.0.1")),
-					Dependency.OnValue("Port", NetHelper.GetAvailablePort())
+					Dependency.OnValue("Port", (PortNumber)NetHelper.GetAvailablePort())
 				));
 
 			this._Injector.RegisterIfAbsent<IGatewayListenerArgsFactory>(Component.For<IGatewayListenerArgsFactory>().ImplementedBy<GatewayListenerArgsFactory>().LifeStyle.Singleton);

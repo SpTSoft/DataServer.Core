@@ -13,6 +13,7 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Logging;
 using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
 using DataServer.Core.Net.Entities.Sockets;
@@ -24,6 +25,8 @@ namespace DataServer.Core.Net
 {
 	public class GatewayListener : IGatewayListener
     {
+		private readonly ILogger _Logger;
+
 		public readonly IGatewayListenerArgsFactory ArgsFactory;
 
         public event NotifyClientConnected? ClientConnected;
@@ -36,11 +39,13 @@ namespace DataServer.Core.Net
 
 		public GatewayListenerStatusEnum Status { get; private set; } = GatewayListenerStatusEnum.NotStarted;
 
-		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory) : 
-			this(settings.IPAddress, settings.Port, argsFactory) { }
+		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory, ILogger logger) : 
+			this(settings.IPAddress, settings.Port, argsFactory, logger) { }
 
-		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory) 
+		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory, ILogger logger) 
         {
+			this._Logger = logger;
+			
 			PortNumber portNumber = port;
 
 			if (NetHelper.CanUsePort(iPAddress, portNumber))
@@ -48,7 +53,10 @@ namespace DataServer.Core.Net
                 this.IPAddress = iPAddress;
                 this.Port = portNumber;
             }
-            else { throw new AccessPortException("Port:" + portNumber + " is locked."); }
+            else 
+			{
+				throw ExceptionLog<AccessPortException>("Port:" + portNumber + " is locked.");
+			}
 
 			this.ArgsFactory = argsFactory;
         }
@@ -156,6 +164,17 @@ namespace DataServer.Core.Net
 		protected async Task ReceivingRequest(IUDPClient netClient)
 		{
 			throw new NotImplementedException();
+		}
+
+		private T ExceptionLog<T>(string message) where T : Exception, new()
+		{
+			object[] args = { message };
+
+			T exception = (T)Activator.CreateInstance(typeof(T), args);
+
+			this._Logger.Log(new LoggerExceptionMessage(message, exception));
+
+			return exception;
 		}
 	}
 }
