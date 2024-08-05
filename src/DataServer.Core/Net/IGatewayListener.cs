@@ -33,7 +33,7 @@ namespace DataServer.Core.Net
 
         public IPAddress IPAddress { get; }
 
-        public int Port { get; }
+        public PortNumber Port { get; }
 
 		public GatewayListenerStatusEnum Status { get; }
 

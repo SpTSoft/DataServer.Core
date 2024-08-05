@@ -29,18 +29,20 @@ namespace DataServer.Core.Net
 
         public IPAddress IPAddress { get; private set; }
 
-        public int Port { get; private set;}
+        public PortNumber Port { get; private set;}
 
 		public GatewayListenerStatusEnum Status { get; private set; } = GatewayListenerStatusEnum.NotStarted;
 
-        public GatewayListener(IPAddress iPAddress, int Port) 
+        public GatewayListener(IPAddress iPAddress, int port) 
         {
-            if (NetHelper.CanUsePort(iPAddress, Port))
+			PortNumber portNumber = port;
+
+			if (NetHelper.CanUsePort(iPAddress, portNumber))
             {
                 this.IPAddress = iPAddress;
-                this.Port = Port;
+                this.Port = portNumber;
             }
-            else { throw new AccessPortException("Port:" + Port + " is locked."); }
+            else { throw new AccessPortException("Port:" + portNumber + " is locked."); }
         }
 
         public async void Run() 

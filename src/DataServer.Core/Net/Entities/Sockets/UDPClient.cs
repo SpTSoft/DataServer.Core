@@ -26,12 +26,12 @@ namespace DataServer.Core.Net.Entities.Sockets
 
 		public UDPClient(AddressFamily family) : base(family) { }
 
-		public UDPClient(int port) : base(port) { }
+		public UDPClient(int port) : base(new PortNumber(port)) { }
 
-		public UDPClient(int port, AddressFamily family) : base(port, family) { }
+		public UDPClient(int port, AddressFamily family) : base(new PortNumber(port), family) { }
 
 		public UDPClient(IPEndPoint localEP) : base(localEP) { }
 
-		public UDPClient(string hostname, int port) : base(hostname, port) { }
+		public UDPClient(string hostname, int port) : base(hostname, new PortNumber(port)) { }
 	}
 }
