@@ -23,5 +23,11 @@ namespace DataServer.Core.Net.Settings
 		public IPAddress IPAddress { get; set; }
 
 		public PortNumber Port { get; set; }
+
+		public GatewayListenerSettings(IPAddress iPAddress, PortNumber port) 
+		{
+			this.IPAddress = iPAddress;
+			this.Port = port;	
+		}
 	}
 }
