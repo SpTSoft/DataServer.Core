@@ -40,32 +40,20 @@ namespace DataServer.Core.Net
 		public IPAddress IPAddress 
 		{
 			get { return this._IPAddress; }
-			private set
-			{
-				this._IPAddress = value;
-				this._Logger.Log("GatewayListener: IPAddress Setted:" + value.ToString());
+			private set { SetVariable(ref this._IPAddress, value); }
 			}
-		}
 
         public PortNumber Port
 		{
 			get { return this._Port; }
-			private set
-			{
-				this._Port = value;
-				this._Logger.Log("GatewayListener: Port Setted:" + value.ToString());
+			private set { SetVariable(ref this._Port, value); }
 			}
-		}
 
 		public GatewayListenerStatusEnum Status 
 		{ 
 			get {  return this._Status; } 
-			private set 
-			{
-				this._Status = value;
-				this._Logger.Log("GatewayListener: Status Setted:" + value.ToString());
+			private set { SetVariable(ref this._Status, value); }
 			}
-		} 
 
 		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory, ILogger logger) : 
 			this(settings.IPAddress, settings.Port, argsFactory, logger) { }
@@ -212,6 +200,12 @@ namespace DataServer.Core.Net
 			this._Logger.Log(new LoggerExceptionMessage(message, exception));
 
 			return exception;
+		}
+
+		private void SetVariable<T>(ref T variable, T value) 
+		{
+			variable = value;
+			this._Logger.Log("GatewayListener: " + typeof(T).Name + " Setted:" + value.ToString());
 		}
 	}
 }
