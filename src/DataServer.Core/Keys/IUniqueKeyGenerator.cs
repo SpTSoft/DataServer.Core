@@ -13,25 +13,12 @@
 * limitations under the License.
 */
 
-using System.Net;
-using System.Net.Sockets;
-
-namespace DataServer.Core.Net.Entities.Sockets
+namespace DataServer.Core.Keys
 {
-	public class UDPClient : UdpClient, IUDPClient
+	public interface IUniqueKeyGenerator
 	{
-		public bool Connected => this.Client.Connected;
+		public object GenerateUniqueKey();
 
-		public UDPClient() : base() { }
-
-		public UDPClient(AddressFamily family) : base(family) { }
-
-		public UDPClient(int port) : base(new PortNumber(port)) { }
-
-		public UDPClient(int port, AddressFamily family) : base(new PortNumber(port), family) { }
-
-		public UDPClient(IPEndPoint localEP) : base(localEP) { }
-
-		public UDPClient(string hostname, int port) : base(hostname, new PortNumber(port)) { }
+		public object GenerateUniqueKey(params object[] objects);
 	}
 }

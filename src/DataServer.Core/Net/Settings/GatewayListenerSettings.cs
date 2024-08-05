@@ -13,15 +13,21 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Net
-{
-	public class UniqueKeyGenerator : IUniqueKeyGenerator
-	{
-		public object GenerateUniqueKey() 
-		{
-			return Guid.NewGuid();
-		}
+using DataServer.Core.Net.Entities;
+using System.Net;
 
-		public object GenerateUniqueKey(params object[] objects) => throw new NotImplementedException();
+namespace DataServer.Core.Net.Settings
+{
+	public class GatewayListenerSettings : IGatewayListenerSettings
+	{
+		public IPAddress IPAddress { get; set; }
+
+		public PortNumber Port { get; set; }
+
+		public GatewayListenerSettings(IPAddress iPAddress, PortNumber port) 
+		{
+			this.IPAddress = iPAddress;
+			this.Port = port;	
+		}
 	}
 }

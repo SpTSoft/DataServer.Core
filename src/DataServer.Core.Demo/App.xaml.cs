@@ -1,10 +1,11 @@
-﻿using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel;
-using Castle.MicroKernel.Registration;
+﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using DataServer.Core.Demo.DI;
 using DataServer.Core.Demo.MainMVVM;
 using DataServer.Core.Net;
+using DataServer.Core.Net.Args;
+using DataServer.Core.Net.Entities;
+using DataServer.Core.Net.Settings;
 using Oscallo.Castle.AddonedKernel.Injectors;
 using System.Net;
 using System.Windows;
@@ -27,11 +28,14 @@ namespace DataServer.Core.Demo
 
 			this._Injector = Injector.Resolve<IInjector>(container);
 
-			this._Injector.RegisterIfAbsent<IGatewayListener>(
-				Component.For<IGatewayListener>().ImplementedBy<GatewayListener>().LifeStyle.Singleton.DependsOn(
+			this._Injector.RegisterIfAbsent<IGatewayListenerSettings>(Component.For<IGatewayListenerSettings>().ImplementedBy<GatewayListenerSettings>().LifeStyle.Singleton.
+				DependsOn(
 					Dependency.OnValue("IPAddress", IPAddress.Parse("127.0.0.1")),
-					Dependency.OnValue("Port", NetHelper.GetAvailablePort())
+					Dependency.OnValue("Port", (PortNumber)NetHelper.GetAvailablePort())
 				));
+
+			this._Injector.RegisterIfAbsent<IGatewayListenerArgsFactory>(Component.For<IGatewayListenerArgsFactory>().ImplementedBy<GatewayListenerArgsFactory>().LifeStyle.Singleton);
+			this._Injector.RegisterIfAbsent<IGatewayListener>(Component.For<IGatewayListener>().ImplementedBy<GatewayListener>().LifeStyle.Singleton);
 
 			this._Injector.RegisterIfAbsent<IMainViewModel>(Component.For<IMainViewModel>().ImplementedBy<MainViewModel>().LifeStyle.Singleton);
 			this._Injector.RegisterIfAbsent<IMainWindow>(Component.For<IMainWindow>().ImplementedBy<MainWindow>().LifeStyle.Singleton);

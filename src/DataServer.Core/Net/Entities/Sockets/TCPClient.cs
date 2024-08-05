@@ -39,6 +39,6 @@ namespace DataServer.Core.Net.Entities.Sockets
 
 		public TCPClient(AddressFamily family) : base(family) { }
 
-		public TCPClient(string hostname, int port) : base(hostname, port) { }
+		public TCPClient(string hostname, int port) : base(hostname, new PortNumber(port)) { }
 	}
 }

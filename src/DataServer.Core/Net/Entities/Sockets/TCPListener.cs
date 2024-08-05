@@ -22,19 +22,15 @@ namespace DataServer.Core.Net.Entities.Sockets
 	{
 		public TCPListener(IPEndPoint localEP) : base(localEP) { }
 
-		public TCPListener(IPAddress localaddr, int port) : base(localaddr, port) { }
+		public TCPListener(IPAddress localaddr, int port) : base(localaddr, new PortNumber(port)) { }
 
 		[Obsolete("This method has been deprecated. Please use TcpListener(IPAddress localaddr, int port) instead. http://go.microsoft.com/fwlink/?linkid=14202")]
-		public TCPListener(int port) : base(port) { }
+		public TCPListener(int port) : base(new PortNumber(port)) { }
 
 		public new static TCPListener Create(int port) 
 		{
-			if (TCPListener.IsValidTcpPort(port) == false)
-			{
-				throw new ArgumentOutOfRangeException("Port is not valid");
-			}
-
-			TCPListener listener = new(IPAddress.IPv6Any, port);
+			PortNumber portNumber = port;
+			TCPListener listener = new(IPAddress.IPv6Any, portNumber);
 			listener.Server.DualMode = true;
 
 			return listener;
@@ -57,11 +53,6 @@ namespace DataServer.Core.Net.Entities.Sockets
 			Task<TcpClient> basedTask = base.AcceptTcpClientAsync();
 			Task<TCPClient> yourTaskObject = basedTask.ContinueWith(t => new TCPClient(t.Result));
 			return yourTaskObject;
-		}
-
-		public static bool IsValidTcpPort(int port)
-		{
-			return port >= IPEndPoint.MinPort && port <= IPEndPoint.MaxPort;
 		}
 	}
 }

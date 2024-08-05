@@ -1,4 +1,5 @@
 ﻿using DataServer.Core.Net;
+using DataServer.Core.Net.Args;
 using System.Net;
 
 namespace DataServer.Core.Tests.Net
@@ -11,7 +12,7 @@ namespace DataServer.Core.Tests.Net
         {
             int availablePort = NetHelper.GetAvailablePort();
 
-            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort);
+            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort, new GatewayListenerArgsFactory());
         }
 
         [TestMethod]
@@ -19,7 +20,7 @@ namespace DataServer.Core.Tests.Net
         {
             int availablePort = NetHelper.GetAvailablePort();
 
-            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort);
+            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort, new GatewayListenerArgsFactory());
             gatewayListener.Run();
         }
 
@@ -28,8 +29,8 @@ namespace DataServer.Core.Tests.Net
         {
             int availablePort = NetHelper.GetAvailablePort();
 
-            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort);
-            gatewayListener.Run();
+            IGatewayListener gatewayListener = new GatewayListener(IPAddress.Any, availablePort, new GatewayListenerArgsFactory());
+			gatewayListener.Run();
             gatewayListener.Stop();
         }
     }

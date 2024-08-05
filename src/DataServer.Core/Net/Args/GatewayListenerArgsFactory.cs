@@ -13,25 +13,18 @@
 * limitations under the License.
 */
 
-using System.Net;
-using System.Net.Sockets;
+using DataServer.Core.Net.Entities.Sockets;
 
-namespace DataServer.Core.Net.Entities.Sockets
+namespace DataServer.Core.Net.Args
 {
-	public class UDPClient : UdpClient, IUDPClient
+	public class GatewayListenerArgsFactory : IGatewayListenerArgsFactory
 	{
-		public bool Connected => this.Client.Connected;
+		public NotifyClientConnectedEventArgs CreateConnectedEventArgs(INetClient netClient) 
+		{
+			NotifyClientConnectedEventArgs e = new(netClient);
+			return e;
+		}
 
-		public UDPClient() : base() { }
-
-		public UDPClient(AddressFamily family) : base(family) { }
-
-		public UDPClient(int port) : base(new PortNumber(port)) { }
-
-		public UDPClient(int port, AddressFamily family) : base(new PortNumber(port), family) { }
-
-		public UDPClient(IPEndPoint localEP) : base(localEP) { }
-
-		public UDPClient(string hostname, int port) : base(hostname, new PortNumber(port)) { }
+		public NotifyRequestCreatedEventArgs CreateRequestEventArgs(Task task) => throw new NotImplementedException();
 	}
 }

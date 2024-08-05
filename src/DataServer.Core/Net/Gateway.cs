@@ -70,10 +70,19 @@ namespace DataServer.Core.Net
             }
         }
 
-        private void _GatewayListener_ClientConnected(object sender, NotifyClientConnectedEventArgs eConnected) => throw new NotImplementedException();
+		private void _GatewayListener_ClientConnected(object sender, NotifyClientConnectedEventArgs eConnected) 
+		{ 
+			throw new NotImplementedException(); 
+		}
 
-        private void _GatewayListener_ClientDisconnected(object sender, NotifyClientDisconnectedEventArgs eDisconnected) => throw new NotImplementedException();
+        private void _GatewayListener_ClientDisconnected(object sender, NotifyClientDisconnectedEventArgs eDisconnected)
+		{
+			throw new NotImplementedException();
+		}
 
-        private void _GatewayListener_RequestCreated(object sender, NotifyRequestCreatedEventArgs eCreated) => throw new NotImplementedException();
-    }
+		private void _GatewayListener_RequestCreated(object sender, NotifyRequestCreatedEventArgs eCreated)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
