@@ -13,12 +13,15 @@
 * limitations under the License.
 */
 
-namespace DataServer.Core.Net
+namespace DataServer.Core.Keys
 {
-	public interface IUniqueKeyGenerator
+	public class UniqueKeyGenerator : IUniqueKeyGenerator
 	{
-		public object GenerateUniqueKey();
+		public object GenerateUniqueKey()
+		{
+			return Guid.NewGuid();
+		}
 
-		public object GenerateUniqueKey(params object[] objects);
+		public object GenerateUniqueKey(params object[] objects) => throw new NotImplementedException();
 	}
 }
