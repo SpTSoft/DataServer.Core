@@ -14,11 +14,11 @@
 */
 
 using DataServer.Core.Auth;
-using DataServer.Core.Lockering;
+using DataServer.Core.Locking;
 
 namespace DataServer.Core.Access
 {
-    public class AccessGate : IAccessGate
+	public class AccessGate : IAccessGate
     {
         private readonly IAccessCore _AccessCore;
         private readonly ILockerService _LockerService;
