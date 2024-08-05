@@ -1,7 +1,7 @@
 ﻿using DataServer.Core.Net.Entities.Sockets;
 using System.Net.Sockets;
 
-namespace DataServer.Core.Tests.Net.Sockets
+namespace DataServer.Core.Tests.Net.Entities.Sockets
 {
 
 	[TestClass]
