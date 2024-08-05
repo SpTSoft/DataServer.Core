@@ -191,7 +191,7 @@ namespace DataServer.Core.Net
 			throw new NotImplementedException();
 		}
 
-		private T ExceptionLog<T>(string message) where T : Exception, new()
+		private T ExceptionLog<T>(string message) where T : Exception
 		{
 			object[] args = { message };
 
