@@ -17,12 +17,15 @@ using DataServer.Core.Net.Args;
 using DataServer.Core.Net.Entities;
 using DataServer.Core.Net.Entities.Sockets;
 using DataServer.Core.Net.Exceptions;
+using DataServer.Core.Net.Settings;
 using System.Net;
 
 namespace DataServer.Core.Net
 {
 	public class GatewayListener : IGatewayListener
     {
+		public readonly IGatewayListenerArgsFactory ArgsFactory;
+
         public event NotifyClientConnected? ClientConnected;
         public event NotifyClientDisconnected? ClientDisconnected;
         public event NotifyRequestCreated? RequestCreated;
@@ -33,7 +36,10 @@ namespace DataServer.Core.Net
 
 		public GatewayListenerStatusEnum Status { get; private set; } = GatewayListenerStatusEnum.NotStarted;
 
-        public GatewayListener(IPAddress iPAddress, int port) 
+		public GatewayListener(IGatewayListenerSettings settings, IGatewayListenerArgsFactory argsFactory) : 
+			this(settings.IPAddress, settings.Port, argsFactory) { }
+
+		public GatewayListener(IPAddress iPAddress, int port, IGatewayListenerArgsFactory argsFactory) 
         {
 			PortNumber portNumber = port;
 
@@ -43,6 +49,8 @@ namespace DataServer.Core.Net
                 this.Port = portNumber;
             }
             else { throw new AccessPortException("Port:" + portNumber + " is locked."); }
+
+			this.ArgsFactory = argsFactory;
         }
 
         public async void Run() 
@@ -57,13 +65,13 @@ namespace DataServer.Core.Net
 				{*/
 				TCPClient tcpClient = await listener.AcceptTcpClientAsync();
 
-				NotifyClientConnectedEventArgs eConnected = CreateConnectedArgs(tcpClient);
+				NotifyClientConnectedEventArgs eConnected = this.ArgsFactory.CreateConnectedEventArgs(tcpClient);
 				OnClientConnectedBasic(eConnected);
 
 				Task taskRequest = ReceivingRequest(tcpClient);
 				await taskRequest;
 
-				NotifyRequestCreatedEventArgs eCreated = CreateRequestArgs(taskRequest);
+				NotifyRequestCreatedEventArgs eCreated = this.ArgsFactory.CreateRequestEventArgs(taskRequest);
 				OnRequestCreatedBasic(eCreated);
 				/*}
 				catch (Exception) { }*/
@@ -97,17 +105,6 @@ namespace DataServer.Core.Net
 		{
 			OnRequestCreated(eCreated);
 			this.RequestCreated?.Invoke(this, eCreated);
-		}
-
-		private NotifyClientConnectedEventArgs CreateConnectedArgs(INetClient netClient) 
-		{
-			NotifyClientConnectedEventArgs e = new(netClient);
-			return e;
-		}
-
-		private NotifyRequestCreatedEventArgs CreateRequestArgs(Task task) 
-		{
-			throw new NotImplementedException();
 		}
 
 		protected Task ReceivingRequest(INetClient netClient) 
