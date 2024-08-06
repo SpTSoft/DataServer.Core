@@ -13,10 +13,14 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Entities;
+
 namespace DataServer.Core
 {
 	public class RemoteCoreWrapper : ICoreWrapper
-    {
+	{
+		public Task<IRequest> AsyncSendResponce(IResponce responce) => throw new NotImplementedException();
 
-    }
+		public IRequest SendResponce(IResponce responce) => throw new NotImplementedException();
+	}
 }

@@ -16,6 +16,7 @@
 using DataServer.Core.Access;
 using DataServer.Core.Database;
 using DataServer.Core.Modeling;
+using DataServer.Core.Net.Entities;
 
 namespace DataServer.Core
 {
@@ -31,5 +32,9 @@ namespace DataServer.Core
             this._DBGate = dBGate;
             this._AccessGate = accessGate;
         }
-    }
+
+		public Task<IRequest> AsyncSendResponce(IResponce responce) => throw new NotImplementedException();
+
+		public IRequest SendResponce(IResponce responce) => throw new NotImplementedException();
+	}
 }

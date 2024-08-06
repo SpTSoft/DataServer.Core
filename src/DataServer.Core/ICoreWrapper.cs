@@ -13,9 +13,14 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Net.Entities;
+
 namespace DataServer.Core
 {
     public interface ICoreWrapper
     {
-    }
+		public IRequest SendResponce(IResponce responce);
+
+		public Task<IRequest> AsyncSendResponce(IResponce responce);
+	}
 }
