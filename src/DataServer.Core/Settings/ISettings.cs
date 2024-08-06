@@ -13,16 +13,14 @@
 * limitations under the License.
 */
 
-using DataServer.Core.Net.Entities;
-using DataServer.Core.Settings;
-using System.Net;
+using DataServer.Core.Settings.Args;
 
-namespace DataServer.Core.Net.Settings
+namespace DataServer.Core.Settings
 {
-	public interface IGatewayListenerSettings : ISettings
-	{
-		public IPAddress IPAddress { get; set; }
+	public delegate void NotifySettingsChanged(object sender, NotifySettingsChangedEventArgs eChanged);
 
-		public PortNumber Port { get; set; }
+	public interface ISettings
+	{
+		public event NotifySettingsChanged? SettingsChanged;
 	}
 }

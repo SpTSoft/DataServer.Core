@@ -14,22 +14,66 @@
 */
 
 using DataServer.Core.Net.Entities;
+using DataServer.Core.Settings;
+using DataServer.Core.Settings.Args;
 using System.Net;
 
 namespace DataServer.Core.Net.Settings
 {
 	public class GatewayListenerSettings : IGatewayListenerSettings
 	{
-		public IPAddress IPAddress { get; set; }
+		public event NotifySettingsChanged? SettingsChanged;
 
-		public PortNumber Port { get; set; }
+		private IPAddress _IPAddress;
+		private PortNumber _Port;
 
-		public GatewayListenerSettings(IPAddress iPAddress, PortNumber port) 
+		public IPAddress IPAddress 
+		{
+			get { return this._IPAddress; }
+			set 
+			{
+				if (this._IPAddress != value)
+				{
+					SetVariable(ref this._IPAddress, value);
+				}
+			}
+		}
+
+		public PortNumber Port 
+		{
+			get { return this._Port; }
+			set
+			{
+				if (this.Port != value)
+				{
+					SetVariable(ref this._Port, value);
+				}
+			}
+		}
+
+		#pragma warning disable CS8618
+		public GatewayListenerSettings(IPAddress iPAddress, PortNumber port)
+		#pragma warning restore CS8618 
 		{
 			this.IPAddress = iPAddress;
 			this.Port = port;	
 		}
 
 		public GatewayListenerSettings(IPAddress iPAddress, int port) : this(iPAddress, (PortNumber)port) { }
+
+		protected virtual void OnSettingsChanged(NotifySettingsChangedEventArgs eChanged) { }
+
+		private void OnSettingsChangedBasic(NotifySettingsChangedEventArgs eChanged)
+		{
+			OnSettingsChanged(eChanged);
+			this.SettingsChanged?.Invoke(this, eChanged);
+		}
+
+		private void SetVariable<T>(ref T variable, T value) 
+		{
+			NotifySettingsChangedEventArgs eChanged = new(variable, value);
+			variable = value;
+			OnSettingsChangedBasic(eChanged);
+		}
 	}
 }
