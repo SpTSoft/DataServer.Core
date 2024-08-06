@@ -13,14 +13,56 @@
 * limitations under the License.
 */
 
+using DataServer.Core.Logging.Settings;
+
 namespace DataServer.Core.Logging
 {
 	public class FileLogger : ILogger
 	{
-		public void Log(string message) => throw new NotImplementedException();
+		private readonly IFileLoggerSettings _Settings;
+
+		private string FilePath => GetFilePath(this._Settings);
+
+		public FileLogger(IFileLoggerSettings settings) 
+		{
+			this._Settings = settings;
+
+			if (Path.Exists(this._Settings.FilePath) == false)
+			{
+				Directory.CreateDirectory(this._Settings.FilePath);
+			}
+		}
+
+		public void Log(string message) 
+		{
+			if (File.Exists(this.FilePath) == false) { CreateLogFile(this.FilePath); }
+			AppendLogFile(this.FilePath, message, this._Settings);
+		}
 
 		public void Log(LoggerMessage loggerMessage) => throw new NotImplementedException();
 
 		public void Log(LoggerExceptionMessage exceptionMessage) => throw new NotImplementedException();
+
+		private void CreateLogFile(string path) 
+		{
+			using (var stream = File.Open(this.FilePath, FileMode.OpenOrCreate)) { }
+		}
+
+		private void AppendLogFile(string path, string message, IFileLoggerSettings settings) 
+		{ 
+			File.AppendAllText(path, settings.PrefixMessage + message + settings.SuffixMessage);
+		}
+
+		private string GetFilePath(IFileLoggerSettings settings) 
+		{
+			if (settings.DateTimePosition == DateTimePositionEnum.Prefix)
+			{
+				return this._Settings.FilePath + DateTime.Now.ToShortDateString() + " " + this._Settings.FileName + this._Settings.FileExtension;
+			}
+			else
+			{
+				return this._Settings.FilePath  + this._Settings.FileName + " " + DateTime.Now.ToShortDateString() + this._Settings.FileExtension;
+			}
+		}
 	}
 }
